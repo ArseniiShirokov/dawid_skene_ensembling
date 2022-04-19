@@ -1,23 +1,13 @@
 
-## dawid_skene
+## dawid_skene_ensembling
 
-This project is an implementation of the estimator for combining unreliable observations from Dawid and Skene (1979).
+This project is based on the implementation of the estimator for combining unreliable observations from Dawid and Skene (1979).
 
-Given unreliable observations of patient classes by multiple observers,
-determine the most likely true class for each patient, class marginals,
-and  individual error rates for each observer, using Expectation Maximization
+We want to **use the ensembling of pretrained models** to **generate reliable pseudo labels** or **managing annotation mistakes**. 
 
-The example from the paper can be executed by running this script from the command line, i.e.
-> python dawid_skene.py
-
-Alternatively, it can be run within a python script as follows:
-
-> import dawid_skene
-> 
-> responses = dawid_skene.generate_sample_data()
-> 
-> dawid_skene.run(responses)
-
+Given unreliable labels by multiple pretrain models,
+determine pseudo labels (the most likely true class for each image), class marginals,
+and individual error rates for each model, using Expectation Maximization.
 
 ### References:
 
