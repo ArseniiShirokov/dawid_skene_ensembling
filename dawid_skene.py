@@ -52,7 +52,7 @@ Input:
     tol: tolerance required for convergence of EM
     max_iter: maximum number of iterations of EM
 """ 
-def run(responses, tol=0.00001, max_iter=100, init='average'):
+def run(responses, tol=0.00001, max_iter=100, init=None):
     # convert responses to counts
     (patients, observers, classes, counts) = responses_to_counts(responses)
     print("num Patients:", len(patients))
@@ -65,7 +65,10 @@ def run(responses, tol=0.00001, max_iter=100, init='average'):
     old_class_marginals = None
     old_error_rates = None
 
-    patient_classes = majority_voting(counts)
+    if init is not None:
+        patient_classes = init(counts)
+    else:
+        patient_classes = majority_voting(counts)
     
     print("Iter\tlog-likelihood\tdelta-CM\tdelta-ER") 
     
@@ -98,9 +101,11 @@ def run(responses, tol=0.00001, max_iter=100, init='average'):
                 
     # Print final results
     np.set_printoptions(precision=2, suppress=True)
+    print("Class error rates")
+    print(error_rates)
     print("Class marginals")
     print(class_marginals)  
-    return patient_classes 
+    return dict(zip(patients, patient_classes.tolist())) 
  
 """
 Function: responses_to_counts()
